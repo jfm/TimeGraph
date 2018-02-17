@@ -26,7 +26,7 @@ class InfluxShell(Cmd):
         except InfluxDBClientError as error:
             self.influx_error_handler(error.code, error.content)
         except DrawingException as drawing_error:
-            self.graphtool_error_handler(drawing_error.message)
+            self.graphtool_error_handler(drawing_error.code, drawing_error.message)
 
     def do_list(self):
         print('list - Not implemented yet')
@@ -49,8 +49,8 @@ class InfluxShell(Cmd):
         contentJson = json.loads(content)
         print(code, ' -- ', contentJson['error'])
 
-    def graphtool_error_handler(self, message):
-        print(message)
+    def graphtool_error_handler(self, code, message):
+        print(code, ' -- ', message)
 
 # select count(water_level) from h2o_feet
 # select * from h2o_feet limit 5

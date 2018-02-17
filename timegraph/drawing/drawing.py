@@ -11,7 +11,7 @@ class Drawing:
         if value_key is not None:
             value_list = self.get_value_list(db_response.get_points(), value_key)
         else:
-            raise DrawingException('Could not determine value key')
+            raise DrawingException(100, 'Could not determine value key')
 
         # Create graph
         return self.graphtool.graph('test', value_list)
@@ -42,6 +42,10 @@ class Drawing:
 
 
 class DrawingException(Exception):
-    def __init__(self, message):
-        super().__init__(message)
+    def __init__(self, code, message):
+        super().__init__(code, message)
+        self.code = code
         self.message = message
+
+### Code definitions
+# 100 series is problems converting query to x/y value list
