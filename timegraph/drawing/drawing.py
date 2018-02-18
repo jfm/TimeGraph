@@ -1,40 +1,37 @@
+import numbers
+
+import dateutil.parser as dp
 from ascii_graph import Pyasciigraph
+from timegraph.drawing.plotter import Plotter
 
 
 class Drawing:
 
     def __init__(self):
         self.graphtool = Pyasciigraph()
+        self.plotter = Plotter()
 
-    def create_graph(self, db_response):
-        value_key = self.get_value_key(db_response)
-        if value_key is not None:
-            value_list = self.get_value_list(db_response.get_points(), value_key)
-        else:
-            raise DrawingException(100, 'Could not determine value key')
+    def create_graph(self, title, db_response):
+        value_list = self.get_value_list(db_response.get_points())
+
+        self.plotter.plot_timeseries(value_list)
 
         # Create graph
-        return self.graphtool.graph('test', value_list)
+        #return self.graphtool.graph(title, value_list)
 
-    def get_value_key(self, result_set):
-        result = ""
+    def get_value_list(self, points):
+        # filtered_points = list(filter(lambda point: point[key] is not None, points))
 
-        for point in result_set.get_points():
+        result = []
+        for point in points:
             point_keys = point.keys()
-            if not len(point_keys) > 2:
-                for key in point_keys:
-                    if key != 'time':
-                        result = key
-                        break
-            else:
-                result = None
-            break
+            for key in point_keys:
+                if key != 'time':
+                    if point[key] is not None and isinstance(point[key], numbers.Number):
+                        result.append(point[key])
 
         return result
-
-    def get_value_list(self, points, key):
-        filtered_points = list(filter(lambda point: point[key] is not None, points))
-        return [(point['time'], point[key]) for point in filtered_points]
+        # return [(point['time'], point[key]) for point in filtered_points]
 
     def print_graph(self, lines):
         for line in lines:

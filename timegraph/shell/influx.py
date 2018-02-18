@@ -20,8 +20,9 @@ class InfluxShell(Cmd):
 
         try:
             response = self.client.query(query)
-            graph = self.drawing.create_graph(response)
-            self.drawing.print_graph(graph)
+            self.drawing.create_graph(query, response)
+            #graph = self.drawing.create_graph(query, response)
+            #self.drawing.print_graph(graph)
 
         except InfluxDBClientError as error:
             self.influx_error_handler(error.code, error.content)
