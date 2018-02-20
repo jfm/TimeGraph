@@ -1,8 +1,15 @@
+import shutil
+
+
 class Plotter():
 
     def __init__(self):
-        self.height = 10
-        self.width = 80
+        terminal_size = shutil.get_terminal_size()
+        print(terminal_size)
+        self.terminal_height = terminal_size[1]
+        self.height = terminal_size[1] - 4
+        self.terminal_width = terminal_size[0]
+        self.width = terminal_size[0] - 5
 
     def plot_timeseries(self, value_list):
         scaled_values = self.scale_values(value_list)
@@ -24,6 +31,9 @@ class Plotter():
 
     def generate_matrix(self, values):
         matrix = [[' ' for x in range(self.width)] for y in range(self.height)]
+        splice_start = len(values) - self.width
+        if splice_start > 0:
+            values = values[splice_start:]
 
         for index, value in enumerate(values):
             matrix[value][index] = '*'
@@ -31,14 +41,13 @@ class Plotter():
 
     def print_matrix(self, y_scale, matrix):
 
-        self.print_line(self.width)
+        self.print_line(self.terminal_width - 1)
         for point_y in reversed(range(len(matrix))):
             print(y_scale[point_y], end='')
             for point_x in range(len(matrix[0])):
-                #print(point_x, ',', point_y)
                 print(matrix[point_y][point_x], end='')
             print('')
-        self.print_line(self.width)
+        self.print_line(self.terminal_width - 1)
 
     def get_y_scale(self, values):
         original_values = [original for (original, scaled) in values]
@@ -64,7 +73,6 @@ class Plotter():
             next_value -= scale
 
         return y_scale
-
 
     def print_line(self, length):
         for index in range(length):
