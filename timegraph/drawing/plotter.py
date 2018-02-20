@@ -3,13 +3,19 @@ import shutil
 
 class Plotter():
 
-    def __init__(self):
-        terminal_size = shutil.get_terminal_size()
-        print(terminal_size)
-        self.terminal_height = terminal_size[1]
-        self.height = terminal_size[1] - 4
-        self.terminal_width = terminal_size[0]
-        self.width = terminal_size[0] - 5
+    def __init__(self, is_test=False):
+        if not is_test:
+            terminal_size = shutil.get_terminal_size()
+            print(terminal_size)
+            self.terminal_height = terminal_size[1]
+            self.height = terminal_size[1] - 4
+            self.terminal_width = terminal_size[0]
+            self.width = terminal_size[0] - 5
+        else:
+            self.terminal_height = 10
+            self.height = 10
+            self.terminal_width = 40
+            self.width = 40
 
     def plot_timeseries(self, value_list):
         scaled_values = self.scale_values(value_list)

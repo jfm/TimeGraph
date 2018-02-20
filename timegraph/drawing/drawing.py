@@ -1,5 +1,5 @@
 from numbers import Number
-from drawing.plotter import Plotter
+from timegraph.drawing.plotter import Plotter
 
 
 class Drawing:
@@ -11,9 +11,6 @@ class Drawing:
         value_list = self.get_value_list(db_response.get_points())
 
         self.plotter.plot_timeseries(value_list)
-
-        # Create graph
-        # return self.graphtool.graph(title, value_list)
 
     def get_value_list(self, points):
 

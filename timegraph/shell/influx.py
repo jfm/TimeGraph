@@ -1,7 +1,7 @@
 from cmd import Cmd
 from influxdb import InfluxDBClient
 from influxdb.exceptions import InfluxDBClientError
-from drawing.drawing import Drawing, DrawingException
+from timegraph.drawing.drawing import Drawing, DrawingException
 import json
 
 

@@ -1,4 +1,4 @@
-from shell.influx import InfluxShell
+from timegraph.shell.influx import InfluxShell
 
 if __name__ == '__main__':
     influx_shell = InfluxShell()
