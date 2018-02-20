@@ -1,3 +1,4 @@
+from nose.tools import assert_equal
 from influxdb.resultset import ResultSet
 from timegraph.drawing.drawing import Drawing
 
@@ -21,29 +22,20 @@ class TestDrawing:
 
         self.dummy_points = [
             {
-                "measurement": "cpu_load_short",
-                "tags": {
-                    "host": "server01",
-                    "region": "us-west"
-                },
+                "cpu_load": 0.50,
                 "time": "2009-11-10T23:00:00.123456Z",
-                "fields": {
-                    "value": 0.64
-                }
             },
             {
-                "measurement": "cpu_load_short",
-                "tags": {
-                    "host": "server01",
-                    "region": "us-west"
-                },
-                "time": "2009-11-11T23:00:00.123456Z",
-                "fields": {
-                    "value": 0.64
-                }
+                "cpu_load": 0.50,
+                "time": "2009-11-10T23:00:00.123456Z",
+            },
+            {
+                "cpu_load": 0.50,
+                "time": "2009-11-10T23:00:00.123456Z",
             }
         ]
 
     def test_get_value_list(self):
-        self.drawing = Drawing()
-        self.drawing.get_value_list(self.dummy_points)
+        drawing = Drawing()
+        result = drawing.get_value_list(self.dummy_points)
+        assert_equal(len(result), 3)
