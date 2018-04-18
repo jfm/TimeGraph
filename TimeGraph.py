@@ -1,5 +1,5 @@
-from timegraph.shell.influx import InfluxShell
+from timegraph.shell.timegraph import TimeGraphShell
 
 if __name__ == '__main__':
-    influx_shell = InfluxShell()
-    influx_shell.main()
+    shell = TimeGraphShell()
+    shell.main()

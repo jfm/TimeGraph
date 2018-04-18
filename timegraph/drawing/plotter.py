@@ -6,7 +6,6 @@ class Plotter():
     def __init__(self, is_test=False):
         if not is_test:
             terminal_size = shutil.get_terminal_size()
-            print(terminal_size)
             self.terminal_height = terminal_size[1]
             self.height = terminal_size[1] - 4
             self.terminal_width = terminal_size[0]
